@@ -1,51 +1,35 @@
 // -------import-----------
 import express from 'express';
 import router from './routes/api.js';
-const app= new express();
-
-// Security middleware to limit repeated requests from the same IP (Prevents DDoS attacks & brute-force attacks)
 import rateLimit from 'express-rate-limit';
-
-// Security middleware that sets various HTTP headers to protect against common web vulnerabilities
 import helmet from 'helmet';
-
-//Prevent NoSQL Injection
 import mongosanitize from 'express-mongo-sanitize';
-
-// Security middleware to prevent XSS (Cross-Site Scripting) attacks
 import xss from 'xss-clean';
-
-// Security middleware to prevent HTTP Parameter Pollution attacks
 import hpp from 'hpp';
-
-// Middleware to enable Cross-Origin Resource Sharing (CORS)
 import cors from 'cors';
-
-// Middleware to parse cookies from incoming requests
 import cookieParser from 'cookie-parser';
-
-// Mongoose library to interact with MongoDB
 import mongoose from 'mongoose';
-
-// Built-in Node.js module for handling file paths
 import path from 'path';
-
-// Import 'fileURLToPath' from 'url' to convert import.meta.url to a file path
 import { fileURLToPath } from 'url';
 
-// Importing environment variables and configuration settings
-import {LIMIT_MESSAGE, MONGODB_STRING, MONGODB_OPTION, JSON_SIZE, RATE_LIMIT_TIME, TIME_LIMIT_INTERVAL } from './app/config/config.js';
+// Load environment variables from .env file
+import dotenv from 'dotenv';
+dotenv.config(); // Load the environment variables from .env file
 
+// Set up the Express app
+const app = new express();
 
+// Access environment variables
+const { MONGODB_STRING, MONGODB_OPTION, LIMIT_MESSAGE, JSON_SIZE, RATE_LIMIT_TIME, TIME_LIMIT_INTERVAL } = process.env;
 
-//---------- use packages--------
+// ----------use packages--------
 // Set security HTTP headers
 app.use(helmet());
 
 // Limit repeated requests from the same IP (Prevents DDoS & brute-force attacks)
 const limiter = rateLimit({
-    windowMs:RATE_LIMIT_TIME,
-    max: TIME_LIMIT_INTERVAL, // Limit each IP to ..times requests per windowMs
+    windowMs: parseInt(RATE_LIMIT_TIME), // In milliseconds
+    max: parseInt(TIME_LIMIT_INTERVAL), // Limit each IP to..times requests per windowMs
     message: LIMIT_MESSAGE,
 });
 app.use(limiter);
@@ -72,29 +56,27 @@ app.use(express.urlencoded({ limit: JSON_SIZE, extended: true }));
 // Disable ETag generation to prevent caching validation overhead and manual caching management
 app.set('etag', false);
 
-
 // -------- MongoDB connection--------
-mongoose.connect(MONGODB_STRING,MONGODB_OPTION).then((res)=>{
-    console.log("Database Connected")
-}).catch((err)=>{
-    console.log(err)
-})
+const mongooseOptions = JSON.parse(MONGODB_OPTION);  // Parse the MongoDB options
+mongoose.connect(MONGODB_STRING, mongooseOptions)
+    .then(() => {
+        console.log("Database Connected");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 // Use the router for API version 1 (this will handle requests to '/api/v1')
 app.use("/api/v1", router);
 
 // -----------React front-end-----------
-// Convert 'import.meta.url' to a file path and store it in __filename
 const __filename = fileURLToPath(import.meta.url);
-
-// Get the directory name of the current module and store it in __dirname
 const __dirname = path.dirname(__filename);
 
-
 // Add React Front End Routing
-app.use(express.static('view/dist'))
-app.get('*',function (req,res) {
-    res.sendFile(path.resolve(__dirname,'view','dist','index.html'))
-})
+app.use(express.static('view/dist'));
+app.get('*', function (req, res) {
+    res.sendFile(path.resolve(__dirname, 'view', 'dist', 'index.html'));
+});
 
 export default app;

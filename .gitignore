@@ -1,1 +1,31 @@
+# Node.js
 node_modules/
+
+# npm log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# dotenv environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor directories
+.vscode/
+.idea/
+
+# Optional: For testing, coverage, and other artifacts
+/coverage
+/nyc_output
+
+# Optional: For temporary or lock files
+*.tgz
