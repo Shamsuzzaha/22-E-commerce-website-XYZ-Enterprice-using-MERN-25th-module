@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL || process.env.BASE_URL;
+
 const productStore = create((set) => ({
     ProductBrandList: null,
     ProductCategoryList: null,
@@ -11,7 +13,7 @@ const productStore = create((set) => ({
 
     ProductBrandListRequest: async () => {
         try {
-            let res = await axios.get('/api/v1/ProductBrandList');
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductBrandList`);
             if (res.status === 200) {
                 set({ ProductBrandList: res.data['data'] });
             }
@@ -22,7 +24,7 @@ const productStore = create((set) => ({
 
     ProductCategoryListRequest: async () => {
         try {
-            let res = await axios.get('/api/v1/ProductCategoryList');
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductCategoryList`);
             if (res.status === 200) {
                 set({ ProductCategoryList: res.data['data'] });
             }
@@ -33,7 +35,7 @@ const productStore = create((set) => ({
 
     ProductSliderListRequest: async () => {
         try {
-            let res = await axios.get('/api/v1/ProductSliderList');
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductSliderList`);
             if (res.status === 200) {
                 set({ ProductSliderList: res.data['data'] });
             }
@@ -45,7 +47,7 @@ const productStore = create((set) => ({
     ProductListByBrandRequest: async (id) => {
         try {
             set({ ProductList: null });
-            let res = await axios.get(`/api/v1/ProductListByBrand/${id}`);
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductListByBrand/${id}`);
             if (res.status === 200) {
                 set({ ProductList: res.data['data'] });
             }
@@ -57,7 +59,7 @@ const productStore = create((set) => ({
     ProductListByCategoryRequest: async (id) => {
         try {
             set({ ProductList: null });
-            let res = await axios.get(`/api/v1/ProductListByCategory/${id}`);
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductListByCategory/${id}`);
             if (res.status === 200) {
                 set({ ProductList: res.data['data'] });
             }
@@ -69,19 +71,19 @@ const productStore = create((set) => ({
     ProductListBySimilarRequest: async (id) => {
         try {
             set({ ProductList: null });
-            let res = await axios.get(`/api/v1/ProductListBySimilar/${id}`);
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductListBySimilar/${id}`);
             if (res.status === 200) {
                 set({ ProductList: res.data['data'] });
             }
         } catch (error) {
-            console.error(`Error fetching ProductListBySmilier for ID ${id}:`, error);
+            console.error(`Error fetching ProductListBySimilar for ID ${id}:`, error);
         }
     },
 
     ProductListByFilterRequest: async (postBody) => {
         try {
             set({ ProductList: null });
-            let res = await axios.post(`/api/v1/ProductListByFilter`, postBody);
+            let res = await axios.post(`${BASE_URL}/api/v1/ProductListByFilter`, postBody);
             if (res.data['status'] === "success") {
                 set({ ProductList: res.data['data'] });
             }
@@ -90,11 +92,10 @@ const productStore = create((set) => ({
         }
     },
 
-
     ProductListByKeywordRequest: async (key) => {
         try {
             set({ ProductList: null });
-            let res = await axios.get(`/api/v1/ProductListByKeyword/${key}`);
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductListByKeyword/${key}`);
             if (res.status === 200) {
                 set({ ProductList: res.data['data'] });
             }
@@ -105,7 +106,7 @@ const productStore = create((set) => ({
 
     ProductListByRemarkRequest: async (remark) => {
         try {
-            let res = await axios.get(`/api/v1/ProductListByRemark/${remark}`);
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductListByRemark/${remark}`);
             if (res.status === 200) {
                 set({ ProductListByRemark: res.data['data'] });
             }
@@ -114,11 +115,9 @@ const productStore = create((set) => ({
         }
     },
 
-
-
     ProductDetailsRequest: async (id) => {
         try {
-            let res = await axios.get(`/api/v1/ProductDetails/${id}`);
+            let res = await axios.get(`${BASE_URL}/api/v1/ProductDetails/${id}`);
             if (res.status === 200) {
                 set({ ProductDetails: res.data['data'] });
             }
@@ -127,12 +126,10 @@ const productStore = create((set) => ({
         }
     },
 
-
-    SearchKeyword:"",
-    SetSearchKeyword:async(keyword)=>{
-        set({SearchKeyword:keyword})
+    SearchKeyword: "",
+    SetSearchKeyword: async (keyword) => {
+        set({ SearchKeyword: keyword });
     },
-
 }));
 
 export default productStore;

@@ -7,7 +7,7 @@ import payimg from '../../public/pay.png';
 export const paylogo = payimg;
 
 // lotio animation data
-import animationdata from './images/animation.json';
+import animationdata from './animation.json';
 export const lottiedata = animationdata;
 
 //no Result image

@@ -1,6 +1,6 @@
 import React from 'react';
 import Skeleton from "react-loading-skeleton";
-import ImagePlaceholder from "../../assets/images/animation.json";
+import ImagePlaceholder from "../../assets/animation.json";
 import Lottie from "lottie-react";
 
 const CartSkeleton = () => {
