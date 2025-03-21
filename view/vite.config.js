@@ -9,7 +9,7 @@ export default defineConfig({
     // port: 5173,
     proxy: {
       '/api/': {
-        target: 'http://localhost:5030',
+        target: 'https://xyzenterprise-zohajs.onrender.com',
         changeOrigin: true,
         secure: false
       }

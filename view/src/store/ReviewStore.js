@@ -3,7 +3,7 @@ import axios from "axios";
 import { getEmail, setEmail, unauthorized } from "../utility/utility.js";
 import Cookies from "js-cookie";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || process.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ReviewStore = create((set) => ({
     ReviewList: null,

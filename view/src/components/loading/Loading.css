@@ -1,0 +1,44 @@
+/* Loading.css */
+.loading-overlay {
+    position: fixed; /* Fixed position to cover entire screen */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 9999; /* Ensure it's above all other content */
+    backdrop-filter: blur(5px); /* Apply background blur effect */
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Optional: Styling for the spinner */
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-container {
+    text-align: center;
+    color: white;
+}
+
+.loading-container p {
+    margin-top: 20px;
+}

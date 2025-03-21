@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || process.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const featureStore = create((set) => ({
     FeaturesList: null,

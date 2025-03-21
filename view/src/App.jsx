@@ -20,7 +20,7 @@ import CartPage from "./pages/cartPage.jsx";
 import WishPage from "./pages/wishPage.jsx";
 import InvoicePage from "./pages/invoicePage.jsx";
 import OrderPage from "./pages/orderPage.jsx";
-import PaymentSuccess from "./components/paymentStatus/paymentSuccess.jsx";
+
 
 const App = () => {
     return (
@@ -62,12 +62,6 @@ const App = () => {
             {/*    -----Order---------*/}
                 <Route path='/orders' element={<OrderPage/>}/>
                 <Route path='/invoice/:id' element={<InvoicePage/>}/>
-
-            {/*--------payment status page*/}
-                <Route path='/PaymentSuccess/:id' element={<PaymentSuccess/>}/>
-                <Route path='/invoice/:id' element={<PaymentSuccess/>}/>
-                <Route path='/invoice/:id' element={<PaymentSuccess/>}/>
-                <Route path='/invoice/:id' element={<PaymentSuccess/>}/>
             </Routes>
         </BrowserRouter>
     );
