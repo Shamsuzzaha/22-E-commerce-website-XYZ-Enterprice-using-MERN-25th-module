@@ -20,7 +20,10 @@ import CartPage from "./pages/cartPage.jsx";
 import WishPage from "./pages/wishPage.jsx";
 import InvoicePage from "./pages/invoicePage.jsx";
 import OrderPage from "./pages/orderPage.jsx";
+import axios from 'axios';
 
+// Enable credentials with every request
+axios.defaults.withCredentials = true;
 
 const App = () => {
     return (
